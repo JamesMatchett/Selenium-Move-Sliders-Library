@@ -57,7 +57,7 @@ namespace SliderLib
         }
 
 
-        public static void MoveSliderLessInfo(IWebElement Slider, IWebElement textBox, IWebDriver driver, decimal Amount)
+        public static void MoveSliderUsingTextBox(IWebElement Slider, IWebElement textBox, IWebDriver driver, decimal Amount)
         {
             //Find the min value
             
@@ -71,17 +71,7 @@ namespace SliderLib
             MoveSlider(Slider, driver, 0);  
             decimal SliderMin = Filter(textBox.Text);
             //find incriment value
-            decimal incriment = 0;
-
-            for (int i = 1; i <Slider.Size.Width; i++)
-            {
-                MoveSlider(Slider, driver, i);
-                if(Filter(textBox.Text) != SliderMin)
-                {
-                     incriment = (Filter(textBox.Text) - SliderMin);
-                     break;
-                }
-            }
+           
 
 
             
@@ -96,6 +86,23 @@ namespace SliderLib
             Actions SliderAction = new Actions(driver);
             //Move the slider back to 0, then move it by the number of pixels calculated about
             SliderAction.ClickAndHold(Slider).MoveByOffset((-(int)Slider.Size.Width / 2), 0).MoveByOffset(Pixels, 0).Release().Perform();
+        }
+
+        public static decimal GetIncrement(IWebDriver driver, IWebElement Slider, IWebElement textBox, decimal SliderMin)
+        {
+            decimal incriment = 0;
+
+            for (int i = 1; i < Slider.Size.Width; i++)
+            {
+                MoveSlider(Slider, driver, i);
+                if (Filter(textBox.Text) != SliderMin)
+                {
+                    incriment = (Filter(textBox.Text) - SliderMin);
+                    break;
+                }
+            }
+
+            return incriment;
         }
 
        
