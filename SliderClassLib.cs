@@ -39,6 +39,13 @@ namespace SliderLib
         {
             //method overload if amount passed is in any format other than decimal for ease of use
             decimal ConvAmount = Convert.ToDecimal(Amount);
+         
+            MoveSliderWithInfo(SliderMax, SliderMin, SliderDivision, ConvAmount, Slider, driver);
+        }
+
+        public static void MoveSliderWithInfo(int SliderMax, int SliderMin, int SliderDivision, string Amount, IWebElement Slider, IWebDriver driver)
+        {
+            decimal ConvAmount = Filter(Amount);
             MoveSliderWithInfo(SliderMax, SliderMin, SliderDivision, ConvAmount, Slider, driver);
         }
 
@@ -75,11 +82,6 @@ namespace SliderLib
             int Pixels = Convert.ToInt32(tempPixels);
             MoveSlider(Slider, driver, Pixels, Slider.Size.Width);
 
-
-
-
-
-
         }
 
         public static void MoveSlider(IWebElement Slider, IWebDriver driver, int Pixels, decimal sliderWidth)
@@ -106,7 +108,7 @@ namespace SliderLib
 
         }
 
-        
+      
 
 
 
