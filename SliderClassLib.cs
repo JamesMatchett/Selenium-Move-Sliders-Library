@@ -11,7 +11,7 @@ namespace SliderLib
     public static class Slider
     {
         //Note: Selenium Web Driver must be installed
-        public static void MoveSliderWithInfo(int SliderMax, int SliderMin, int SliderDivision, decimal Amount, IWebElement Slider, IWebDriver driver)
+        public static void MoveSliderWithInfo(int SliderMax, int SliderMin, decimal Amount, IWebElement Slider, IWebDriver driver)
         {
             //SliderMin and SliderMax are the respective maximum and mininum values of the slider
             //SliderDivision is the change per division of the slider
@@ -35,19 +35,29 @@ namespace SliderLib
 
         }
 
-        public static void MoveSliderWithInfo(int SliderMax, int SliderMin, int SliderDivision, dynamic Amount, IWebElement Slider, IWebDriver driver)
+        public static void MoveSliderWithInfo(int SliderMax, int SliderMin,  dynamic Amount, IWebElement Slider, IWebDriver driver)
         {
             //method overload if amount passed is in any format other than decimal for ease of use
             decimal ConvAmount = Convert.ToDecimal(Amount);
          
-            MoveSliderWithInfo(SliderMax, SliderMin, SliderDivision, ConvAmount, Slider, driver);
+            MoveSliderWithInfo(SliderMax, SliderMin, ConvAmount, Slider, driver);
         }
 
-        public static void MoveSliderWithInfo(int SliderMax, int SliderMin, int SliderDivision, string Amount, IWebElement Slider, IWebDriver driver)
+        public static void MoveSliderWithInfo(int SliderMax, int SliderMin,  string Amount, IWebElement Slider, IWebDriver driver)
         {
             decimal ConvAmount = Filter(Amount);
-            MoveSliderWithInfo(SliderMax, SliderMin, SliderDivision, ConvAmount, Slider, driver);
+            MoveSliderWithInfo(SliderMax, SliderMin,  ConvAmount, Slider, driver);
         }
+
+        public static void MoveSliderNoInfo(IWebDriver driver, IWebElement slider, dynamic amount)
+        {
+            int SliderMax = Convert.ToInt32(slider.GetAttribute("max"));
+            int SliderMin = Convert.ToInt32(slider.GetAttribute("min"));
+            decimal ConvAmount = Convert.ToDecimal(amount);
+
+            MoveSliderWithInfo(SliderMax, SliderMin, ConvAmount, slider, driver);
+        }
+
 
         public static void MoveSliderLessInfo(IWebElement Slider, IWebElement textBox, IWebDriver driver, decimal Amount)
         {
@@ -75,6 +85,7 @@ namespace SliderLib
                 }
             }
 
+
             decimal tempPixels = Slider.Size.Width;
             tempPixels = tempPixels / (SliderMax - SliderMin);
             tempPixels = tempPixels * (Amount - SliderMin);
@@ -90,6 +101,8 @@ namespace SliderLib
             //Move the slider back to 0, then move it by the number of pixels calculated about
             SliderAction.ClickAndHold(Slider).MoveByOffset((-(int)sliderWidth / 2), 0).MoveByOffset(Pixels, 0).Release().Perform();
         }
+
+       
 
         public static decimal Filter(string TextBoxText)
         {
@@ -107,12 +120,6 @@ namespace SliderLib
             return ReturnDecimal;
 
         }
-
-      
-
-
-
-
 
     }
 }
