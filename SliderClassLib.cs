@@ -18,15 +18,13 @@ namespace SliderLib
 
             //Using the Equation (Width of slider/(Max value - min value)) * (Amount - Min Value)
             //->James Matchett, can't patent an equation but I can put my name on it at least :) 
-            decimal tempPixels = Slider.Size.Width;
-            tempPixels = tempPixels / (SliderMax - SliderMin);
-            tempPixels = tempPixels * (Amount - SliderMin);
+           
 
-            int Pixels = Convert.ToInt32(tempPixels);
+            int Pixels = GetPixelsToMove(Slider, Amount, SliderMax, SliderMin);
 
             decimal sliderWidth = Slider.Size.Width;
 
-            MoveSlider(Slider, driver, Pixels, sliderWidth);
+            MoveSlider(Slider, driver, Pixels);
 
             
             
@@ -64,20 +62,20 @@ namespace SliderLib
             //Find the min value
             
             //Move slider to Max Value 
-            MoveSlider(Slider, driver, Slider.Size.Width, Slider.Size.Width);
+            MoveSlider(Slider, driver, Slider.Size.Width);
             //read max value
           
             decimal SliderMax = Filter(textBox.Text);
             
             //move slider to min value
-            MoveSlider(Slider, driver, 0, Slider.Size.Width);  
+            MoveSlider(Slider, driver, 0);  
             decimal SliderMin = Filter(textBox.Text);
             //find incriment value
             decimal incriment = 0;
 
             for (int i = 1; i <Slider.Size.Width; i++)
             {
-                MoveSlider(Slider, driver, i, Slider.Size.Width);
+                MoveSlider(Slider, driver, i);
                 if(Filter(textBox.Text) != SliderMin)
                 {
                      incriment = (Filter(textBox.Text) - SliderMin);
@@ -86,20 +84,18 @@ namespace SliderLib
             }
 
 
-            decimal tempPixels = Slider.Size.Width;
-            tempPixels = tempPixels / (SliderMax - SliderMin);
-            tempPixels = tempPixels * (Amount - SliderMin);
+            
 
-            int Pixels = Convert.ToInt32(tempPixels);
-            MoveSlider(Slider, driver, Pixels, Slider.Size.Width);
+            int Pixels = GetPixelsToMove(Slider, Amount, SliderMax, SliderMin);
+            MoveSlider(Slider, driver, Pixels);
 
         }
 
-        public static void MoveSlider(IWebElement Slider, IWebDriver driver, int Pixels, decimal sliderWidth)
+        public static void MoveSlider(IWebElement Slider, IWebDriver driver, int Pixels)
         {
             Actions SliderAction = new Actions(driver);
             //Move the slider back to 0, then move it by the number of pixels calculated about
-            SliderAction.ClickAndHold(Slider).MoveByOffset((-(int)sliderWidth / 2), 0).MoveByOffset(Pixels, 0).Release().Perform();
+            SliderAction.ClickAndHold(Slider).MoveByOffset((-(int)Slider.Size.Width / 2), 0).MoveByOffset(Pixels, 0).Release().Perform();
         }
 
        
@@ -120,6 +116,35 @@ namespace SliderLib
             return ReturnDecimal;
 
         }
+
+        public static int GetPixelsToMove(IWebElement Slider, decimal Amount, decimal SliderMax, decimal SliderMin)
+        {
+            int pixels = 0;
+
+            decimal tempPixels = Slider.Size.Width;
+            tempPixels = tempPixels / (SliderMax - SliderMin);
+            tempPixels = tempPixels * (Amount - SliderMin);
+
+             pixels = Convert.ToInt32(tempPixels);
+
+
+            return pixels;
+        }
+
+
+        public static void SetText(this IWebElement web, IWebDriver driver, string text)
+        {
+            IJavaScriptExecutor java = (IJavaScriptExecutor)driver;
+            java.ExecuteScript("arguments[0].value = arguments[1];", web, text);
+            //web.
+        }
+
+
+
+
+
+
+
 
     }
 }
