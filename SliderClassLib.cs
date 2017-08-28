@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -73,6 +73,7 @@ namespace SliderLib
             tempPixels = tempPixels * (Amount - SliderMin);
 
             int Pixels = Convert.ToInt32(tempPixels);
+            MoveSlider(Slider, driver, Pixels, Slider.Size.Width);
 
 
 
@@ -93,7 +94,7 @@ namespace SliderLib
 
             string tempString = "";
 
-            for(int i = 0; i <= TextBoxText.Length; i++)
+            for(int i = 0; i < TextBoxText.Length; i++)
             {
                 if(Convert.ToByte(TextBoxText[i]) == 46  || Convert.ToByte(TextBoxText[i]) < 58 && Convert.ToByte(TextBoxText[i]) > 47){
                     tempString = tempString + TextBoxText[i];
@@ -104,6 +105,8 @@ namespace SliderLib
             return ReturnDecimal;
 
         }
+
+        
 
 
 
