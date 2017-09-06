@@ -26,11 +26,6 @@ namespace SliderLib
 
             MoveSlider(Slider, driver, Pixels);
 
-            
-            
-            
-
-
         }
 
         public static void MoveSliderWithInfo(int SliderMax, int SliderMin,  dynamic Amount, IWebElement Slider, IWebDriver driver)
@@ -71,11 +66,7 @@ namespace SliderLib
             MoveSlider(Slider, driver, 0);  
             decimal SliderMin = Filter(textBox.Text);
             //find incriment value
-           
-
-
-            
-
+    
             int Pixels = GetPixelsToMove(Slider, Amount, SliderMax, SliderMin);
             MoveSlider(Slider, driver, Pixels);
 
@@ -137,15 +128,6 @@ namespace SliderLib
 
             return pixels;
         }
-
-
-      
-
-
-
-
-
-
 
 
     }
