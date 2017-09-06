@@ -139,12 +139,7 @@ namespace SliderLib
         }
 
 
-        public static void SetText(this IWebElement web, IWebDriver driver, string text)
-        {
-            IJavaScriptExecutor java = (IJavaScriptExecutor)driver;
-            java.ExecuteScript("arguments[0].value = arguments[1];", web, text);
-            //web.
-        }
+      
 
 
 
