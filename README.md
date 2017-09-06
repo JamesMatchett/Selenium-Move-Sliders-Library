@@ -1,5 +1,5 @@
 # SeleniumDynamicMoveSlider
-Small little library for manipulating sliders by simply passing the amount you want to move the slider to using the Selenium Web Driver
+Small library for manipulating sliders by simply passing the amount you want to move the slider to using the Selenium Web Driver
 
 if you know that the incriment of the slider will be constant then simply pass them through the MoveSliderWithInfo Subroutine, This takes in the Max & Min values, Incriment, and the slider & selenium driver as arguments as well as the amount you want to move the slider to for assertion testing, use in a forloop with the data you have to assert against and save a heck-load of time :).
 
@@ -8,6 +8,7 @@ if you know that the incriment of the slider will be constant then simply pass t
 
 **The next 3 methods are used for specifying a numerical amount, converting it to a pixel value and then moving the slider specified, this is very useful if you only have test data in actual amounts instead of pixel values** 
 
+----------------------------------------------------------------------------------------------------------------------------------------
 MoveSliderWithInfo(int SliderMax, int SliderMin, decimal Amount, IWebElement Slider, IWebDriver driver)
 
 supply the method with the maximum value of the slider (what is actually output to the user), the mininum value of the slider, the amount you want the slider moved to, the slider you want moved as an IWebElement and the driver being used as an IWebDriver.
