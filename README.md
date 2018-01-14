@@ -17,7 +17,7 @@ Comes with overloads for Amount in any numerical format or as a string with a ba
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-MoveSliderUsingTextBox(IWebDriver driver, IWebElement slider, dynamic amount)
+MoveSliderNoInfo(IWebDriver driver, IWebElement slider, dynamic amount)
 
 This is meant to be used when you do not know the maximum or mininum values of the slider on the web browser, it however relies on the slider containing the Max and Min tags within the Dom element as it uses the "Element.getAttribute" method to retrieve these values.
 
