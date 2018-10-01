@@ -18,12 +18,9 @@ namespace SliderLib
 
             //Using the Equation (Width of slider/(Max value - min value)) * (Amount - Min Value)
             //->James Matchett, can't patent an equation but I can put my name on it at least :) 
-           
 
             int Pixels = GetPixelsToMove(Slider, Amount, SliderMax, SliderMin);
-
             decimal sliderWidth = Slider.Size.Width;
-
             MoveSlider(Slider, driver, Pixels);
 
         }
@@ -32,7 +29,6 @@ namespace SliderLib
         {
             //method overload if amount passed is in any format other than decimal for ease of use
             decimal ConvAmount = Convert.ToDecimal(Amount);
-         
             MoveSliderWithInfo(SliderMax, SliderMin, ConvAmount, Slider, driver);
         }
 
@@ -47,26 +43,23 @@ namespace SliderLib
             int SliderMax = Convert.ToInt32(slider.GetAttribute("max"));
             int SliderMin = Convert.ToInt32(slider.GetAttribute("min"));
             decimal ConvAmount = Convert.ToDecimal(amount);
-
             MoveSliderWithInfo(SliderMax, SliderMin, ConvAmount, slider, driver);
         }
 
 
         public static void MoveSliderUsingTextBox(IWebElement Slider, IWebElement textBox, IWebDriver driver, decimal Amount)
         {
-            //Find the min value
-            
-            //Move slider to Max Value 
+            //Move slider to Max Value Position
             MoveSlider(Slider, driver, Slider.Size.Width);
-            //read max value
-          
-            decimal SliderMax = Filter(textBox.Text);
             
+            //read maximum value
+            decimal SliderMax = Filter(textBox.Text);
+
             //move slider to min value
             MoveSlider(Slider, driver, 0);  
             decimal SliderMin = Filter(textBox.Text);
+            
             //find incriment value
-    
             int Pixels = GetPixelsToMove(Slider, Amount, SliderMax, SliderMin);
             MoveSlider(Slider, driver, Pixels);
 
@@ -82,7 +75,6 @@ namespace SliderLib
         public static decimal GetIncrement(IWebDriver driver, IWebElement Slider, IWebElement textBox, decimal SliderMin)
         {
             decimal incriment = 0;
-
             for (int i = 1; i < Slider.Size.Width; i++)
             {
                 MoveSlider(Slider, driver, i);
@@ -92,7 +84,6 @@ namespace SliderLib
                     break;
                 }
             }
-
             return incriment;
         }
 
@@ -100,37 +91,31 @@ namespace SliderLib
 
         public static decimal Filter(string TextBoxText)
         {
-
-            string tempString = "";
+            StringBuilder tempString = "";
 
             for(int i = 0; i < TextBoxText.Length; i++)
             {
-                if(Convert.ToByte(TextBoxText[i]) == 46  || Convert.ToByte(TextBoxText[i]) < 58 && Convert.ToByte(TextBoxText[i]) > 47){
-                    tempString = tempString + TextBoxText[i];
+                Byte TextBoxTextByte = Convert.ToByte(TextBoxText[i]);
+                if (TextBoxTextByte == 46  || TextBoxTextByte < 58 && TextBoxTextByte > 47)
+                {
+                    tempString.Append(TextBoxText[i]);
                 }
             }
-
-            decimal ReturnDecimal = Convert.ToDecimal(tempString);
-            return ReturnDecimal;
-
+            return Convert.ToDecimal(tempString);
         }
 
         public static int GetPixelsToMove(IWebElement Slider, decimal Amount, decimal SliderMax, decimal SliderMin)
         {
             int pixels = 0;
-
             decimal tempPixels = Slider.Size.Width;
             tempPixels = tempPixels / (SliderMax - SliderMin);
             tempPixels = tempPixels * (Amount - SliderMin);
-
-             pixels = Convert.ToInt32(tempPixels);
-
-
+            pixels = Convert.ToInt32(tempPixels);
             return pixels;
         }
-
-
     }
 }
 
 //James Matchett 27/08/17
+
+//Ah, how far I've come and how much further I'll go
