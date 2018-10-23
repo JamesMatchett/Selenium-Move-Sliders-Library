@@ -7,11 +7,11 @@ if you know that the incriment of the slider will be constant then simply pass t
 
 <hr>
 
-### Method List ###
+## Method List ###
 
 **The next 3 methods are used for specifying a numerical amount, converting it to a pixel value and then moving the slider specified, this is very useful if you only have test data in actual amounts instead of pixel values** 
 
-<hr>
+<br>
 
 MoveSliderWithInfo(int SliderMax, int SliderMin, decimal Amount, IWebElement Slider, IWebDriver driver)
 
